@@ -24,8 +24,11 @@
 
 "Refresh repositories":
   cmd.run:
-    - name:  subscription-manager repos --disable="*"
+    - name:  subscription-manager refresh
 
+"Status repositories":
+  cmd.run:
+    - name:  subscription-manager status
 
 
 {#
