@@ -1,3 +1,8 @@
+"Satellite preparation":
+      cmd.run:
+        - name: rpm -Uvh http://{{ rhel_subscription_server }}/pub/katello-ca-consumer-latest.noarch.rpm
+        - creates: /etc/rhsm/ca/katello-server-ca.pem
+
 "Disable all repositories":
   cmd.run:
     - name:  subscription-manager repos --disable="*"
@@ -13,3 +18,10 @@
 "Refresh repositories":
   cmd.run:
     - name:  subscription-manager repos --disable="*"
+
+
+
+{#
+subscription-manager list --available --matches="{{ rhel_subscription_pool }}" --pool-only
+subscription-manager list --consumed --matches="{{ rhel_subscription_pool }}" --pool-only
+#}
