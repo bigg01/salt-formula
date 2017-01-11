@@ -1,3 +1,7 @@
+{% set rhel_subscription_server = "satserver" %}
+
+{% set ose_version = "3.3" %}
+
 "Satellite preparation":
       cmd.run:
         - name: rpm -Uvh http://{{ rhel_subscription_server }}/pub/katello-ca-consumer-latest.noarch.rpm
