@@ -6,6 +6,9 @@
 "Disable all repositories":
   cmd.run:
     - name:  subscription-manager repos --disable="*"
+    - require:
+      - cmd: "Satellite preparation"
+
 
 "Enable RHEL repositories":
   cmd.run:
