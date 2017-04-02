@@ -5,7 +5,7 @@ Six Exeption module
 '''
 
 # Import Python Libs
-# 
+#
 from __future__ import absolute_import
 import logging
 
@@ -31,7 +31,7 @@ def minion(pillar_key):
 
     .. code-block:: bash
 
-        salt '*' exception.minion
+        salt '*' sixexception.minion
 
     '''
     minion_id = __salt__['grains.get']('id')
@@ -52,7 +52,7 @@ def default(provider, pillar_key):
 
     .. code-block:: bash
 
-        salt '*' exception.default
+        salt '*' sixexception.default
 
     '''
 
@@ -70,7 +70,7 @@ def role(pillar_key):
 
     .. code-block:: bash
 
-        salt '*' exception.role
+        salt '*' sixexception.role
 
     '''
     minion_id = __salt__['grains.get']('id')
