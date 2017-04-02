@@ -13,11 +13,15 @@ from salt.exceptions import CommandExecutionError
 log = logging.getLogger(__name__)
 
 
+
+__virtualname__ = 'sixexception'
+
+
 def __virtual__():
     '''
-    Only load this module if the requests python module is available
+    Most everything has the ability to my module
     '''
-    return 'sixexception'
+    return __virtualname__
 
 def minion(pillar_key):
     '''
