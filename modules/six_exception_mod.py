@@ -52,14 +52,19 @@ def default(provider, pillar_key):
 
     .. code-block:: bash
 
-        salt '*' sixexception.default
+        salt '*' sixexception.default <provider> <key>
+        salt '*' sixexception.default sysctl net.ipv4.ip_forward
+        salt-call sixexception.default sysctl net.ipv4.conf.all.forwarding
+    local:
+    1
 
     '''
 
     pillar_path = 'default:scb:{0}:{1}'.format(provider, pillar_key)
+    log.debug(pillar_path)
 
     pillar_default = __salt__['pillar.get'](pillar_path)
-    if pillar_minion is None:
+    if pillar_default is None:
         log.error('Could not load default {0} pillar'.format(pillar_minion))
     return pillar_default
 
