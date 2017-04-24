@@ -3,6 +3,18 @@
 
 
 {% set project_name = 'hello-openshift' %}
+{% set l_project = '
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: core-object-counts
+spec:
+  hard:
+    configmaps: "10"
+    persistentvolumeclaims: "4"
+    replicationcontrollers: "20"
+    secrets: "10"
+    services: "10"' %}
 
 "create project":
   cmd.run:
@@ -16,7 +28,7 @@
          annotations:
            openshift.io/description: This is an example project to demonstrate OpenShift v3
            openshift.io/display-name: Hello OpenShift
-           openshift.io/requester: system:admin
+           openshift.io/requester: {{ runuser }}
            openshift.io/sa.scc.mcs: s0:c13,c7
            openshift.io/sa.scc.supplemental-groups: 1000170000/10000
            openshift.io/sa.scc.uid-range: 1000170000/10000
@@ -27,6 +39,26 @@
            - openshift.io/origin
            - kubernetes
        status:
+       EOF
+
+
+"apply quota project":
+  cmd.run:
+   - runas: {{ runuser }}
+   - onlyif: {{ oc_cli }} --config=$HOME/.kube/config  get project {{ project_name }}
+   - name: |
+       cat <<EOF | {{ oc_cli }} --config=$HOME/.kube/config create -n {{ project_name }} -f -
+       apiVersion: v1
+       kind: ResourceQuota
+       metadata:
+         name: resource-quota
+       spec:
+         hard:
+           configmaps: "10"
+           persistentvolumeclaims: "4"
+           replicationcontrollers: "20"
+           secrets: "10"
+           services: "10"
        EOF
 
 {#
