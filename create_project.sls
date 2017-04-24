@@ -1,8 +1,10 @@
-{% set oc_cli = '/usr/local/bin/oc' %}
-{% set runuser = 'guo' %}
+{% import_yaml "defaults.yaml" as defaults %}
 
-
+{% set kubeconfig = defaults.get('kubeconfig') %}
+{% set oc_cli = defaults.get('oc_cli') %}
+{% set runuser = defaults.get('runuser') %}
 {% set project_name = 'hello-openshift' %}
+
 {% set l_project = '
 apiVersion: v1
 kind: ResourceQuota
@@ -19,7 +21,7 @@ spec:
 "create project":
   cmd.run:
    - runas: {{ runuser }}
-   - onlyif: {{ oc_cli }} --config=$HOME/.kube/config  get project {{ project_name }} || echo 0
+   - onlyif: {{ oc_cli }} --config={{ kubeconfig }}  get project {{ project_name }} || echo 0
    - name: |
        cat <<EOF | {{ oc_cli }} --config=$HOME/.kube/config create -f -
        apiVersion: v1
