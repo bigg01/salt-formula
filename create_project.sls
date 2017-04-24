@@ -61,6 +61,11 @@ spec:
            replicationcontrollers: "20"
            secrets: "10"
            services: "10"
+           pods: "4"
+           requests.cpu: "1"
+           requests.memory: 1Gi
+           limits.cpu: "2"
+           limits.memory: 2Gi  
        EOF
 
 {#
